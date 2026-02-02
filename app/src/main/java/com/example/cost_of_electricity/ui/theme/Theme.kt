@@ -9,18 +9,27 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Blue,
+    secondary = MediumBlue,
+    tertiary = LightBlue,
+    surface = MediumBlue,
+    onSurface = Color(0xFFF6F6F6),
+    onSurfaceVariant = Color(0xFF94B0D3),
+    //background = Color(0xFFCAE2FD),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Blue,
+    secondary = MediumBlue,
+    tertiary = LightBlue,
+    surface = MediumBlue,
+    onSurface = Color(0xFFF6F6F6),
+    onSurfaceVariant = Color(0x371B1E4D),
+    background = Color(0xFFCAE2FD),
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -37,7 +46,7 @@ private val LightColorScheme = lightColorScheme(
 fun CostofelectricityTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
