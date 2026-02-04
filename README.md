@@ -4,10 +4,11 @@ Simple UI and calculator for electricity cost based on consumption, price per kW
 
 ### Screenshots
 
-<img src="img.png" width="200" />
-<img src="img_1.png" width="200" />
-<img src="img_2.png" width="200" />
-
+<tr>
+    <td><img src="img.png" width="200" height="auto" /></td>
+    <td><img src="img_1.png" width="200" height="auto" /></td>
+    <td><img src="img_2.png" width="200" height="auto" /></td>
+</tr>
 
 ### Features 
 
