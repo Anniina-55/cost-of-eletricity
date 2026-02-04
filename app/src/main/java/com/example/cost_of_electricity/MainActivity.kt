@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +35,7 @@ import com.example.cost_of_electricity.ui.theme.CostofelectricityTheme
 import com.example.cost_of_electricity.ui.theme.MediumBlue
 import java.math.BigDecimal
 import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +61,7 @@ fun CostOfElectricity( modifier: Modifier = Modifier) {
 
     // state variables
     var input by remember {mutableStateOf("")}
-    var sliderValue by remember { mutableStateOf(0.25f) } // initial value 0,25 e / kWh
+    var sliderValue by remember { mutableStateOf(0.05f) } // initial value 0,05 e / kWh
     var vat10Selected by remember { mutableStateOf(true) } // initially chosen as that's current vat
 
     // price calculations using BigDecimal class for  accuracy and rounding when dealing with money
@@ -105,15 +105,19 @@ fun CostOfElectricity( modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
-        // this is default slider style, thumb is line instead of circle
+        // this is default slider style, thumb is line instead of circle that could be done with drawable element
         Slider(
             value = sliderValue,
-            onValueChange = { sliderValue = it },
-            valueRange = 0.05f..1.0f,
+            // continuous slider value needs to be rounded to 2 decimal without showing steps in the UI
+            // first converts the slider value to cents, rounds to nearest integer, then divides by 100 to get euros again
+            onValueChange = { sliderValue = (it * 100).roundToInt() / 100f }, // 1 cent steps
+            valueRange = -0.05f..1.0f,
+            // if steps parameter were used: ((maxValue − minValue) / stepSize) - 1, eli ((1.00 − (−0.05)) / 0,01 ) - 1 = 104
+            // steps = 104 -> 1 cent step for range, but these tick marks are visible on UI which is not wanted here
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.primary,
                 activeTrackColor = MaterialTheme.colorScheme.primary,
-                inactiveTrackColor = MaterialTheme.colorScheme.onSurfaceVariant
+                inactiveTrackColor = MaterialTheme.colorScheme.tertiary
             )
         )
         Row (
@@ -127,27 +131,24 @@ fun CostOfElectricity( modifier: Modifier = Modifier) {
                 )
                 )
             Text(
-                text = "VAT 10% (otherwise claculated with VAT 24%)",
+                text = "VAT 10% (otherwise calculated with VAT 24%)",
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
+        // surface is "card" like component with tonal elevation
         Surface(
             tonalElevation = 2.dp,
+            shadowElevation = 4.dp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally) // horizontally inside column
-                .padding(top = 16.dp),
+                .padding(all = 16.dp),
             color = MaterialTheme.colorScheme.surface
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .padding(14.dp)
-            ) {
-                Text(
-                    text = "$roundedCost €",
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
+            Text(
+                text = "$roundedCost €",
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(10.dp)
+            )
 
         }
 
