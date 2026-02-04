@@ -3,11 +3,11 @@
 Simple UI and calculator for electricity cost based on consumption, price per kWh (initial value set to 0,05 €) and VAT % . 
 
 ### Screenshots
-<tr>
-    <td><img src="img.png" width="300" height="auto" /></td>
-    <td><img src="img_1.png" width="300" height="auto" /></td>
-    <td><img src="img_2.png" width="300" height="auto" /></td>
-</tr>
+
+<img src="img.png" width="250" />
+<img src="img_1.png" width="250" />
+<img src="img_2.png" width="250" />
+
 
 ### Features 
 
